@@ -1,11 +1,11 @@
-<?php namespace Wegnermedia\Lameleon;
+<?php namespace Lameleon;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class LameleonServiceProvider
  *
- * @package Wegnermedia\Lameleon
+ * @package Lameleon
  */
 class LameleonServiceProvider extends ServiceProvider
 {

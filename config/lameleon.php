@@ -8,7 +8,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'commands'  => [
-		'command.lameleon.launch' => Wegnermedia\Lameleon\Console\LaunchCommand::class,
+		'command.lameleon.launch' => Lameleon\Console\LaunchCommand::class,
 	],
 
 	/*

@@ -1,4 +1,4 @@
-<?php namespace Wegnermedia\Lameleon\Console;
+<?php namespace Lameleon\Console;
 
 use Illuminate\Console\Command;
 
