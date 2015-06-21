@@ -22,7 +22,6 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
         ],
         "psr-4": {
             "Wegnermedia\\Rocket\\": "src/"
