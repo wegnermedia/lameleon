@@ -1,4 +1,4 @@
-<?php namespace Wegnermedia\Rocket\Console;
+<?php namespace Wegnermedia\Lameleon\Console;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class LaunchCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'rocket:launch';
+	protected $name = 'lameleon:launch';
 
 	/**
 	 * The console command description.
@@ -25,6 +25,6 @@ class LaunchCommand extends Command
 	 */
 	public function fire()
 	{
-		$this->info(config('rocket.foo','It works!'));
+		$this->info(config('lameleon.foo','It works!'));
 	}
 } 

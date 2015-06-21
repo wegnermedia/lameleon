@@ -13,7 +13,7 @@ if ( ! function_exists('translate_eloquent_model') ) {
 		if ( is_object($editor) )
 			$editor = $editor->id;
 
-		$language_repo = config('rocket.');
+		$language_repo = config('lameleon.');
 
 		foreach($data as $slug => $translation_data)
 		{

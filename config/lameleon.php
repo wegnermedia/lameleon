@@ -8,7 +8,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'commands'  => [
-		'command.rocket.launch' => Wegnermedia\Rocket\Console\LaunchCommand::class,
+		'command.lameleon.launch' => Wegnermedia\Lameleon\Console\LaunchCommand::class,
 	],
 
 	/*

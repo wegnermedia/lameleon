@@ -1,13 +1,13 @@
-<?php namespace Wegnermedia\Rocket;
+<?php namespace Wegnermedia\Lameleon;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class RocketServiceProvider
+ * Class LameleonServiceProvider
  *
- * @package Wegnermedia\Rocket
+ * @package Wegnermedia\Lameleon
  */
-class RocketServiceProvider extends ServiceProvider
+class LameleonServiceProvider extends ServiceProvider
 {
 
 	/**
@@ -47,7 +47,7 @@ class RocketServiceProvider extends ServiceProvider
 	protected function publishConfigFiles()
 	{
 		$this->publishes([
-			$this->root('config/rocket.php') => config_path('rocket.php'),
+			$this->root('config/lameleon.php') => config_path('lameleon.php'),
 		]);
 	}
 
@@ -57,7 +57,7 @@ class RocketServiceProvider extends ServiceProvider
 	 */
 	protected function mergeConfigFiles()
 	{
-		$this->mergeConfigFrom($this->root('config/rocket.php'), 'rocket');
+		$this->mergeConfigFrom($this->root('config/lameleon.php'), 'lameleon');
 	}
 
 	/**
@@ -71,7 +71,7 @@ class RocketServiceProvider extends ServiceProvider
 			__DIR__ . '/Helpers/*.php',
 		];
 
-		$paths = array_unique(array_merge($defaults, config('rocket.helpers', [])));
+		$paths = array_unique(array_merge($defaults, config('lameleon.helpers', [])));
 
 		foreach( $paths as $path )
 		{
@@ -91,7 +91,7 @@ class RocketServiceProvider extends ServiceProvider
 	 */
 	protected function registerConsoleCommands()
 	{
-		foreach( config('rocket.commands', []) as $name => $class)
+		foreach( config('lameleon.commands', []) as $name => $class)
 		{
 			$this->app[$name] = $this->app->share(
 				function ($app) use ($class) {
@@ -110,7 +110,7 @@ class RocketServiceProvider extends ServiceProvider
 	 */
 	protected function registerServiceProviders()
 	{
-		foreach(config('rocket.providers', []) as $provider)
+		foreach(config('lameleon.providers', []) as $provider)
 		{
 			$this->app->register($provider);
 		}
