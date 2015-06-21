@@ -15,8 +15,6 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "5.*"
-    },
-    "require-dev": {
         "barryvdh/laravel-debugbar": "^2.0@dev",
         "barryvdh/laravel-ide-helper": "^2.0@dev"
     },
