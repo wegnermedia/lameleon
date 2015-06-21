@@ -14,7 +14,9 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.*",
+        "illuminate/support": "5.0.*"
+    },
+    "require-dev": {
         "barryvdh/laravel-debugbar": "^2.0@dev",
         "barryvdh/laravel-ide-helper": "^2.0@dev"
     },
@@ -23,7 +25,7 @@
             "src/migrations"
         ],
         "psr-4": {
-            "Wegnermedia\\Rocket\\": "packages/wegnermedia/rocket/src/"
+            "Wegnermedia\\Rocket\\": "src/"
         }
     },
     "minimum-stability": "stable"
