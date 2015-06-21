@@ -2,7 +2,7 @@
 
 use Illuminate\Console\Command;
 
-class LaunchCommand extends Command
+class CheckCommand extends Command
 {
 	/**
 	 * The console command name.
@@ -11,7 +11,7 @@ class LaunchCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'lameleon:launch';
+	protected $name = 'lameleon:check';
 
 	/**
 	 * The console command description.

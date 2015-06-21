@@ -8,7 +8,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'commands'  => [
-		'command.lameleon.launch' => Lameleon\Console\LaunchCommand::class,
+		'command.lameleon.check' => Lameleon\Console\CheckCommand::class,
 	],
 
 	/*
@@ -19,6 +19,9 @@ return [
 	'providers' => [
 		Barryvdh\Debugbar\ServiceProvider::class,
 		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+	    Lameleon\Support\Routing\RoutingServiceProvider::class,
+	    Lameleon\Support\Events\EventsServiceProvider::class,
+	    Lameleon\Support\Views\ViewsServiceProvider::class,
 	],
 
 
@@ -29,6 +32,48 @@ return [
     */
     'facades' => [
 	    'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | All Repository Bindings for Route Parameters
+    |--------------------------------------------------------------------------
+    */
+    'route_repository_bindings' => [
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Route Patterns for Route Parameters
+    |--------------------------------------------------------------------------
+    */
+    'route_patterns' => [
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Event Handlers
+    |--------------------------------------------------------------------------
+    */
+    'event_handlers' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Event Listeners
+    |--------------------------------------------------------------------------
+    */
+    'event_listeners' => [],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Register your View Composers here ...
+	|--------------------------------------------------------------------------
+	*/
+    'view_composers' => [
+
     ],
 
 	/*
