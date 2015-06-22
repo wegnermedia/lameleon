@@ -1,4 +1,4 @@
-<?php namespace Melon\Cache\Contracts;
+<?php namespace Melon\Support\Cache\Contracts;
 
 interface CacherService {
 

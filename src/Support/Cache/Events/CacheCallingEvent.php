@@ -1,6 +1,6 @@
-<?php namespace Melon\Cache\Events;
+<?php namespace Melon\Support\Cache\Events;
 
-use Melon\Events\Event;
+use Melon\Support\Events\Event;
 
 class CacheCallingEvent extends Event {
 

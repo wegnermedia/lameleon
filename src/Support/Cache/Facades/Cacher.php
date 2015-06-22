@@ -1,6 +1,6 @@
-<?php namespace Melon\Cache\Facades;
+<?php namespace Melon\Support\Cache\Facades;
 
-use Melon\Cache\Contracts\CacherService;
+use Melon\Support\Cache\Contracts\CacherService;
 use Illuminate\Support\Facades\Facade;
 
 class Cacher extends Facade {

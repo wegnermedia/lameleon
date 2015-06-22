@@ -1,8 +1,8 @@
-<?php namespace Melon\Cache\Traits;
+<?php namespace Melon\Support\Cache\Traits;
 
-use Melon\Cache\Contracts\CacherService;
-use Melon\Cache\Events\CacheCalledEvent;
-use Melon\Cache\Events\CacheCallingEvent;
+use Melon\Support\Cache\Contracts\CacherService;
+use Melon\Support\Cache\Events\CacheCalledEvent;
+use Melon\Support\Cache\Events\CacheCallingEvent;
 use Closure;
 
 trait CachableTrait {

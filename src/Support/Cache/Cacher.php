@@ -1,6 +1,6 @@
-<?php namespace Melon\Cache;
+<?php namespace Melon\Support\Cache;
 
-use Melon\Cache\Contracts\CacherService;
+use Melon\Support\Cache\Contracts\CacherService;
 use Closure;
 use Illuminate\Cache\Repository as LaravelCache;
 use Illuminate\Contracts\Cache\Repository;
@@ -17,7 +17,7 @@ class Cacher implements CacherService, Repository {
 
 	function __construct(LaravelCache $cache)
 	{
-		$this->enabled = config('bake.caching', false);
+		$this->enabled = config('melon.caching', false);
 		$this->cache = $cache;
 	}
 

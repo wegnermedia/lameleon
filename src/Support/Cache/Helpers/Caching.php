@@ -1,6 +1,6 @@
 <?php
 
-use Melon\Cache\Contracts\CacherService;
+use Melon\Support\Cache\Contracts\CacherService;
 
 if ( ! function_exists('cacher') ) {
 
