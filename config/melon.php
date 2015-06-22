@@ -30,6 +30,7 @@ return [
 	    Melon\Support\Cache\CacheServiceProvider::class,
 	    Melon\Support\Debug\DebugServiceProvider::class,
 	    Melon\Support\Events\EventsServiceProvider::class,
+	    Melon\Support\Log\LogServiceProvider::class,
 	    Melon\Support\Routing\RoutingServiceProvider::class,
 	    Melon\Support\Views\ViewsServiceProvider::class,
 	],
@@ -48,6 +49,7 @@ return [
 	    'Bus'       => Melon\Support\Jobs\Facades\Bus::class,
 	    'Cacher'    => Melon\Support\Cache\Facades\Cacher::class,
 	    'Debugger'  => Melon\Support\Debug\Facades\Debugger::class,
+	    'Logger'    => Melon\Support\Log\Facades\Logger::class,
     ],
 
 
