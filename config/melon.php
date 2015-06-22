@@ -19,6 +19,7 @@ return [
 	'providers' => [
 		Barryvdh\Debugbar\ServiceProvider::class,
 		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+	    Melon\Support\Jobs\JobsServiceProvider::class,
 	    Melon\Support\Routing\RoutingServiceProvider::class,
 	    Melon\Support\Events\EventsServiceProvider::class,
 	    Melon\Support\Views\ViewsServiceProvider::class,
@@ -31,7 +32,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'facades' => [
-	    'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+	    'Debugbar'      => Barryvdh\Debugbar\Facade::class,
+	    'Bus'    => Melon\Support\Jobs\Facades\Bus::class,
     ],
 
 
