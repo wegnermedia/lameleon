@@ -8,7 +8,7 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'commands'  => [
-		'command.lameleon.check' => Lameleon\Console\CheckCommand::class,
+		'command.melon.check' => Melon\Console\CheckCommand::class,
 	],
 
 	/*
@@ -19,9 +19,9 @@ return [
 	'providers' => [
 		Barryvdh\Debugbar\ServiceProvider::class,
 		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-	    Lameleon\Support\Routing\RoutingServiceProvider::class,
-	    Lameleon\Support\Events\EventsServiceProvider::class,
-	    Lameleon\Support\Views\ViewsServiceProvider::class,
+	    Melon\Support\Routing\RoutingServiceProvider::class,
+	    Melon\Support\Events\EventsServiceProvider::class,
+	    Melon\Support\Views\ViewsServiceProvider::class,
 	],
 
 

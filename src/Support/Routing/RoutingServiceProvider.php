@@ -1,4 +1,4 @@
-<?php namespace Lameleon\Support\Routing;
+<?php namespace Melon\Support\Routing;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -60,7 +60,7 @@ class RoutingServiceProvider extends ServiceProvider {
 	 */
 	protected function getRouteRepositoryBindings()
 	{
-		return config('lameleon.route_repository_bindings', []);
+		return config('melon.route_repository_bindings', []);
 	}
 
 
@@ -71,7 +71,7 @@ class RoutingServiceProvider extends ServiceProvider {
 	 */
 	protected function getRoutePatterns()
 	{
-		return config('lameleon.route_patterns', []);
+		return config('melon.route_patterns', []);
 	}
 
 }

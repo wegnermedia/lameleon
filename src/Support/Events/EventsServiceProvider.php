@@ -1,4 +1,4 @@
-<?php namespace Lameleon\Support\Events;
+<?php namespace Melon\Support\Events;
 
 use Illuminate\Support\ServiceProvider;
 

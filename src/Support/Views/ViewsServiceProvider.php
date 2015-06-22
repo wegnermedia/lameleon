@@ -1,4 +1,4 @@
-<?php namespace Lameleon\Support\Views;
+<?php namespace Melon\Support\Views;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +25,6 @@ class ViewsServiceProvider extends ServiceProvider {
 	 */
 	public function getViewComposers()
 	{
-		return config('lameleon.view_composers');
+		return config('melon.view_composers');
 	}
 }

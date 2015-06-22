@@ -1,13 +1,13 @@
-<?php namespace Lameleon;
+<?php namespace Melon;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class LameleonServiceProvider
+ * Class MelonServiceProvider
  *
- * @package Lameleon
+ * @package Melon
  */
-class LameleonServiceProvider extends ServiceProvider
+class MelonServiceProvider extends ServiceProvider
 {
 
 	/**
@@ -47,7 +47,7 @@ class LameleonServiceProvider extends ServiceProvider
 	protected function publishConfigFiles()
 	{
 		$this->publishes([
-			$this->root('config/lameleon.php') => config_path('lameleon.php'),
+			$this->root('config/melon.php') => config_path('melon.php'),
 		]);
 	}
 
@@ -57,7 +57,7 @@ class LameleonServiceProvider extends ServiceProvider
 	 */
 	protected function mergeConfigFiles()
 	{
-		$this->mergeConfigFrom($this->root('config/lameleon.php'), 'lameleon');
+		$this->mergeConfigFrom($this->root('config/melon.php'), 'melon');
 	}
 
 	/**
@@ -71,7 +71,7 @@ class LameleonServiceProvider extends ServiceProvider
 			__DIR__ . '/Helpers/*.php',
 		];
 
-		$paths = array_unique(array_merge($defaults, config('lameleon.helpers', [])));
+		$paths = array_unique(array_merge($defaults, config('melon.helpers', [])));
 
 		foreach( $paths as $path )
 		{
@@ -91,7 +91,7 @@ class LameleonServiceProvider extends ServiceProvider
 	 */
 	protected function registerConsoleCommands()
 	{
-		foreach( config('lameleon.commands', []) as $name => $class)
+		foreach( config('melon.commands', []) as $name => $class)
 		{
 			$this->app[$name] = $this->app->share(
 				function ($app) use ($class) {
@@ -110,7 +110,7 @@ class LameleonServiceProvider extends ServiceProvider
 	 */
 	protected function registerServiceProviders()
 	{
-		foreach(config('lameleon.providers', []) as $provider)
+		foreach(config('melon.providers', []) as $provider)
 		{
 			$this->app->register($provider);
 		}

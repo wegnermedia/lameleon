@@ -1,4 +1,4 @@
-<?php namespace Lameleon\Console;
+<?php namespace Melon\Console;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class CheckCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'lameleon:check';
+	protected $name = 'melon:check';
 
 	/**
 	 * The console command description.
@@ -25,6 +25,6 @@ class CheckCommand extends Command
 	 */
 	public function fire()
 	{
-		$this->info(config('lameleon.foo','It works!'));
+		$this->info(config('melon.foo','It works!'));
 	}
 } 

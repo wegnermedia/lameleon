@@ -1,5 +1,5 @@
 {
-    "name": "wegnermedia/lameleon",
+    "name": "wegnermedia/melon",
     "description": "",
     "keywords": [
         "laravel"
@@ -10,7 +10,7 @@
             "email": "stefan@wegnermedia.de"
         }
     ],
-    "homepage": "https://github.com/wegnermedia/lameleon",
+    "homepage": "https://github.com/wegnermedia/melon",
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
@@ -22,7 +22,7 @@
         "classmap": [
         ],
         "psr-4": {
-            "Lameleon\\": "src/"
+            "Melon\\": "src/"
         }
     },
     "minimum-stability": "stable"
