@@ -1,6 +1,6 @@
-<?php namespace Melon\Cache;
+<?php namespace Melon\Support\Cache;
 
-use Melon\Cache\Contracts\CacherService;
+use Melon\Support\Cache\Contracts\CacherService;
 use Illuminate\Support\ServiceProvider;
 
 class CacheServiceProvider extends ServiceProvider {
