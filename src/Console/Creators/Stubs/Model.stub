@@ -1,0 +1,59 @@
+<?php namespace {namespace};
+
+use Illuminate\Database\Eloquent\Model;
+use Melon\Database\Eloquent\EloquentMelonModel;
+
+/**
+ * Class {name}
+ */
+class {name} extends Model
+{
+	use EloquentMelonModel;
+
+	/**
+     * @var string
+     */
+    public $table = '{table}';
+
+	/**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        // 'is_active'  => 'boolean',
+        // 'is_admin'   => 'boolean',
+        // 'options'    => 'array',
+    ];
+
+    /**
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * @var bool
+     */
+    protected $softDelete = true;
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+
+    ];
+
+    /**
+     * @var array
+     */
+    protected $hidden = [
+
+    ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+
+    ];
+}

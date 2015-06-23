@@ -16,6 +16,7 @@ class MelonServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->publishConfigFiles();
+		$this->defineModelConstants();
 	}
 
 	/**
@@ -49,6 +50,20 @@ class MelonServiceProvider extends ServiceProvider
 		$this->publishes([
 			$this->root('config/melon.php') => config_path('melon.php'),
 		]);
+	}
+
+
+	/**
+	 *
+	 */
+	protected function defineModelConstants()
+	{
+		foreach(config('melon.models') as $name => $class)
+		{
+			$key = 'MELON_MODEL_' . strtoupper($name);
+
+			define($key, $class);
+		}
 	}
 
 
