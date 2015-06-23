@@ -5,7 +5,7 @@ use Melon\Support\Cache\Events\CacheCalledEvent;
 use Melon\Support\Cache\Events\CacheCallingEvent;
 use Closure;
 
-trait CachableTrait {
+trait CacheSupport {
 
 	/**
 	 * Get an item from the cache or get a default value

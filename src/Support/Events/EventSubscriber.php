@@ -2,14 +2,14 @@
 
 use Artisan;
 use Illuminate\Events\Dispatcher;
-use Melon\Support\Cache\Traits\CachableTrait;
+use Melon\Support\Cache\Traits\CacheSupport;
 
 /**
  * Class EventHandler
  */
 abstract class EventSubscriber {
 
-	use CachableTrait;
+	use CacheSupport;
 
 	/**
 	 * Get Events to Subscribe to
