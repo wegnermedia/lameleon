@@ -83,8 +83,8 @@ class MelonServiceProvider extends ServiceProvider
 	protected function requireHelperFiles()
 	{
 		$defaults = [
-			__DIR__ . '/Support/Helpers/*.php',
-		    __DIR__ . '/Support/*/Helpers/*.php',
+			__DIR__ . '/Helpers/*.php',
+		    __DIR__ . '/*/Helpers/*.php',
 		];
 
 		$paths = array_unique(array_merge($defaults, config('melon.helpers', [])));
