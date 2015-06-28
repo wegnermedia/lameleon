@@ -16,7 +16,10 @@ class MelonServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->publishConfigFiles();
+		$this->publishDatabaseFiles();
+		$this->publishAppFiles();
 		$this->defineModelConstants();
+		$this->bootFacades();
 	}
 
 	/**
@@ -52,6 +55,27 @@ class MelonServiceProvider extends ServiceProvider
 		]);
 	}
 
+	/**
+	 *
+	 */
+	protected function publishDatabaseFiles()
+	{
+		$this->publishes([
+			$this->root('database/migrations') => database_path('migrations'),
+			$this->root('database/seeds') => database_path('seeds'),
+		]);
+	}
+
+	/**
+	 *
+	 */
+	protected function publishAppFiles()
+	{
+		$this->publishes([
+			$this->root('app') => app_path(),
+			$this->root('database/seeds') => database_path('seeds'),
+		]);
+	}
 
 	/**
 	 *
@@ -132,5 +156,19 @@ class MelonServiceProvider extends ServiceProvider
 		}
 
 		return $this;
+	}
+
+
+	/**
+	 * Boot up the Melon Facades
+	 */
+	protected function bootFacades()
+	{
+		$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+		foreach( config('melon.facades', []) as $name => $class)
+		{
+			$loader->alias($name, $class);
+		}
 	}
 }

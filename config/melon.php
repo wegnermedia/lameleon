@@ -4,6 +4,13 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
+	| The root namespace of the app
+	|--------------------------------------------------------------------------
+	*/
+	'app_name' => 'App',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Enable Application Cache
 	|--------------------------------------------------------------------------
 	*/
@@ -30,7 +37,7 @@ return [
 	|
 	| For the ultimative experience and comfortable usage of model helpers,
 	| you'll need to setup some models here ... These will be available
-	| as a constant via MELON_MODEL_USER everywhere in application.
+	| as a constant via MELON_MODEL_NAME everywhere in application.
 	|
 	*/
     'models'    => [
@@ -86,8 +93,13 @@ return [
 	|--------------------------------------------------------------------------
 	*/
 	'commands'  => [
-		'command.melon.check' => Melon\Console\CheckCommand::class,
-		'command.melon.create.resource' => Melon\Console\Creators\ResourceCreatorCommand::class,
+		'command.melon.check'           => Melon\Console\CheckCommand::class,
+		'command.melon.refresh'         => Melon\Console\RefreshCommand::class,
+		'command.melon.create.resource' => Melon\Console\Creator\ResourceCreatorCommand::class,
+		'command.melon.create.service'  => Melon\Console\Creator\ServiceCreatorCommand::class,
+		'command.melon.create.job'      => Melon\Console\Creator\JobCreatorCommand::class,
+		'command.melon.create.event'    => Melon\Console\Creator\EventCreatorCommand::class,
+		'command.melon.create.request'  => Melon\Console\Creator\RequestCreatorCommand::class,
 	],
 
 	/*

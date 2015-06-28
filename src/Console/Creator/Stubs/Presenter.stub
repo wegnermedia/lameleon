@@ -1,0 +1,8 @@
+<?php namespace {root}\Presenters;
+
+use Melon\Presenting\Presenter;
+
+class {name} extends Presenter
+{
+
+}

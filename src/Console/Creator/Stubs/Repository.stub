@@ -1,0 +1,16 @@
+<?php namespace {root}\Repositories;
+
+use Melon\Database\Eloquent\EloquentMelonRepository;
+
+class {repository}
+{
+	use EloquentMelonRepository;
+
+	/**
+     * @param {model} $model
+     */
+    function __construct({model} $model)
+    {
+        $this->model = $model;
+    }
+}

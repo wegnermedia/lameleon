@@ -1,0 +1,6 @@
+<?php namespace {root}\Services\{component};
+
+interface {name}
+{
+
+}

@@ -52,7 +52,7 @@ if ( ! function_exists('token') ) {
 
 if ( ! function_exists('to_case') ) {
 
-	function to_case($string, $by = ['-','_','.'])
+	function to_case($string, $by = ['-','_','.','/','\\'])
 	{
 		return str_replace(' ','', ucwords(str_replace($by,' ', $string)));
 	}

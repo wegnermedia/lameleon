@@ -1,0 +1,22 @@
+<?php
+
+use {root}\Repositories\{model};
+use Illuminate\Database\Seeder;
+
+class {name} extends Seeder {
+
+	public function run()
+	{
+		foreach($this->getData() as $data)
+		{
+			{model}::create($data);
+		}
+	}
+
+	protected function getData()
+	{
+		return [
+			[],
+		];
+	}
+}

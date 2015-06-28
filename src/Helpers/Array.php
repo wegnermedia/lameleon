@@ -125,18 +125,20 @@ if ( ! function_exists('array_insert_at_pattern') ) {
 	 *
 	 * @return array
 	 */
-	function array_insert_at_pattern(array &$array, array $inserts)
+	function array_insert_at_pattern(array &$array, array $inserts, $regex = false)
 	{
 		foreach ( $inserts as $pattern => $content)
 		{
 			$count = count($array);
 
+			$pattern = $regex ? $pattern : "|".preg_quote($pattern)."|u";
+
 			for( $i = 0; $i < $count; $i++ )
 			{
 				// Search for pattern or skip
-				if ( ! preg_match("|".preg_quote($pattern)."|u", $array[$i]) ) continue;
+				if ( ! preg_match($pattern, $array[$i]) ) continue;
 
-				// we have a winner, add the contetn
+				// we have a winner, add the content
 				array_splice($array, $i, 0, $content);
 
 				// raise the iteration count to avoid duplicate entries
@@ -157,3 +159,37 @@ if ( ! function_exists('array_insert_at_position') ) {
 	}
 }
 
+if ( ! function_exists('array_insert_into') ) {
+
+    function array_insert_into(array &$array, $content, $after, $before, $regex = false)
+    {
+        $is_in_between = false;
+
+        $count = count($array);
+
+	    // Regex or a simple string pattern?
+	    $after_pattern  = $regex ? $after  : "|" . preg_quote($after) . "|u";
+	    $before_pattern = $regex ? $before : "|" . preg_quote($before) . "|u";
+
+	    for( $i = 0; $i < $count; $i++ )
+	    {
+		    if ( $is_in_between === true )
+		    {
+		        // Great we are in the right context
+			    if ( preg_match($before_pattern, $array[$i]) )
+		        {
+			        // we have a winner, add the content
+				    array_splice($array, $i - 1, 0, $content);
+
+                    return $array;
+		        }
+		    }
+
+	        if ( preg_match($after_pattern, $array[$i]) )
+		        $is_in_between = true;
+	    }
+
+	    return $array;
+    }
+
+}

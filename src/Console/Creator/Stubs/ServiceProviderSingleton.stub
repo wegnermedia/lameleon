@@ -1,0 +1,5 @@
+
+		$this->app->singleton(\{contract}::class, function($app)
+        {
+            return new \{service}();
+        });

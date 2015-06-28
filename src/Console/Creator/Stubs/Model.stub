@@ -1,4 +1,4 @@
-<?php namespace {namespace};
+<?php namespace {root}\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Melon\Database\Eloquent\EloquentMelonModel;
