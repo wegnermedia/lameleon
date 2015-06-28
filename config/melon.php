@@ -41,7 +41,7 @@ return [
 	|
 	*/
     'models'    => [
-	    'user'          => Bake\System\Users\Repository\User::class,
+	    'user'          => App\Repositories\User::class,
         'language'      => null,
         'tag'           => null
     ],
