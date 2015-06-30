@@ -1,8 +1,8 @@
-<?php namespace {root}\Repositories;
+<?php namespace {namespace};
 
 use Melon\Database\Eloquent\EloquentMelonRepository;
 
-class {repository}
+class {name}
 {
 	use EloquentMelonRepository;
 

@@ -35,36 +35,44 @@ class ResourceCreatorCommand extends Command
 	 */
 	public function handle()
 	{
-		$name = $this->argument('name');
-		$table = $this->toTable($name, $this->option('table'));
+		$component  = $this->argument('component');
+		$name       = $this->argument('name');
+		$table      = $this->toTable($component, $name, $this->option('table'));
 
 		$translatable = $this->confirm('Is it translatable?');
 
-		$this->createModel($name, $table);
-		$this->createRepository($name);
-		$this->createPresenter($name);
-		$this->createMigration($name, $table, 'Default');
-		$this->createTableSeeder($name);
+		$this->createModel($component, $name, $table);
+		$this->createRepository($component, $name);
+		$this->createPresenter($component, $name);
+		$this->createMigration($component, $name, $table, 'Default');
+		$this->createTableSeeder($component, $name);
 
 		if ( $translatable )
 		{
-			$this->createModel($name . 'Translation', $this->toTranslationTable($table));
-			$this->createMigration($name, $this->toTranslationTable($table), 'Translation');
+			$this->createModel($component, $name . 'Translation', $this->toTranslationTable($table));
+			$this->createMigration($component, $name, $this->toTranslationTable($table), 'Translation');
 		}
 
 		$this->info('Whohoooo, Resource created ...');
 	}
 
 	/**
+	 * Create a new
+	 *
 	 * @param $name
 	 * @param $table
 	 *
 	 * @return \Melon\Console\Creator\ResourceCreatorCommand
 	 */
-	protected function createModel($name, $table)
+	protected function createModel($component, $name, $table)
 	{
-		return $this->create('Model', app_path("Repositories/$name.php"), compact('name', 'table'));
+		$path       = $this->repositoryPath($component, $name . '.php');
+		$namespace  = path_to_namespace($path);
+
+		return $this->create('Model', $path, compact('component', 'name', 'table', 'namespace'));
 	}
+
+
 
 	/**
 	 * Create a new repository class
@@ -73,12 +81,14 @@ class ResourceCreatorCommand extends Command
 	 *
 	 * @return $this
 	 */
-	protected function createRepository($name)
+	protected function createRepository($component, $name)
 	{
 		$model = $name;
-		$repository = $name . 'Repository';
+		$name = $name . 'Repository';
+		$path = $this->repositoryPath($component, $name . '.php');
+		$namespace = path_to_namespace($path);
 
-		return $this->create('Repository', app_path("Repositories/$repository.php"), compact('repository', 'model'));
+		return $this->create('Repository', $path, compact('component', 'name', 'model', 'namespace'));
 	}
 
 	/**
@@ -88,11 +98,13 @@ class ResourceCreatorCommand extends Command
 	 *
 	 * @return $this
 	 */
-	protected function createPresenter($name)
+	protected function createPresenter($component, $name)
 	{
 		$name = $name . 'Presenter';
+		$path = $this->presenterPath($component, $name . '.php');
+		$namespace = path_to_namespace($path);
 
-		return $this->create('Presenter', app_path("Presenters/$name.php"), compact('name'));
+		return $this->create('Presenter', $path, compact('name', 'namespace'));
 	}
 
 
@@ -105,9 +117,9 @@ class ResourceCreatorCommand extends Command
 	 *
 	 * @return $this
 	 */
-	protected function createMigration($name, $table, $template = 'Default')
+	protected function createMigration($component, $name, $table, $template = 'Default')
 	{
-		$filename = "create_{$name}_tables";
+		$filename = "create_{$component}_{$name}_tables";
 
 		// Check if Migration already exists
 		$file = glob(base_path('database/migrations/*'.$filename.'.php'));
@@ -149,18 +161,17 @@ class ResourceCreatorCommand extends Command
 	 * @param $name
 	 * @param $namespace_root
 	 *
-	 * @return \Melon\Console\Creators\Traits\MelonCreatorTrait
 	 */
-	protected function createTableSeeder($name)
+	protected function createTableSeeder($component, $name)
 	{
 		$model = $name;
-		$name  = $name . 'TableSeeder';
+		$name  = $component . $name . 'TableSeeder';
 
 		$this->create('Seeder', base_path('database/seeds/'. $name . '.php'), compact('name', 'model'));
 
 		$seeder_path = base_path('database/seeds/DatabaseSeeder.php');
 
-		$content = "\t\t" . '// $this->call("' . $name . '");' . "\n";
+		$content = "\t\t" . '// $this->call(' . $name . '::class);' . "\n";
 		$after  = 'unguard()';
 		$before = 'reguard()';
 
@@ -176,7 +187,8 @@ class ResourceCreatorCommand extends Command
 	protected function getArguments()
 	{
 		return [
-			['name', InputArgument::REQUIRED, 'Name of the resource (e.g. Language or Order)'],
+			['component', InputArgument::REQUIRED, 'In which component do you want to create a resource (Base, Shop, Blog, Forum, Specials)'],
+			['name', InputArgument::REQUIRED, 'Name of the resource (e.g. User, Post, Language or Order)'],
 		];
 	}
 

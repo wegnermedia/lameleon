@@ -2,6 +2,11 @@
 
 use File;
 
+/**
+ * Class MelonCreatorTrait
+ *
+ * @package Melon\Console\Creator
+ */
 trait MelonCreatorTrait
 {
 	/**
@@ -57,9 +62,9 @@ trait MelonCreatorTrait
 	 *
 	 * @return null
 	 */
-	protected function toTable($name, $optional = null)
+	protected function toTable($component, $name, $optional = null)
 	{
-		return is_null($optional) ? $name : $optional;
+		return is_null($optional) ? $component . '__' . $name : $optional;
 	}
 
 	/**
@@ -70,6 +75,43 @@ trait MelonCreatorTrait
 	protected function toTranslationTable($table)
 	{
 		return $table . '_Translations';
+	}
+
+
+	/**
+	 * Get the Repository Path
+	 *
+	 * @param      $component
+	 * @param null $file
+	 *
+	 * @return string
+	 */
+	protected function repositoryPath($component, $file = null)
+	{
+		return app_path("{$component}/Repository/Eloquent/{$file}");
+	}
+
+	/**
+	 * Get the components presenters path.
+	 *
+	 * @param      $component
+	 * @param null $file
+	 *
+	 * @return string
+	 */
+	protected function presenterPath($component, $file = null)
+	{
+		return app_path("{$component}/Presenters/Eloquent/{$file}");
+	}
+
+	/**
+	 * Get the applications root name.
+	 *
+	 * @return mixed
+	 */
+	protected function getRoot()
+	{
+		return config('melon.app_name', 'App');
 	}
 
 	/**

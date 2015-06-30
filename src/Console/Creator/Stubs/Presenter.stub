@@ -1,4 +1,4 @@
-<?php namespace {root}\Presenters;
+<?php namespace {namespace};
 
 use Melon\Presenting\Presenter;
 
