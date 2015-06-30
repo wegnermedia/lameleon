@@ -1,6 +1,7 @@
 <?php namespace Melon\Console\Creator;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
@@ -11,6 +12,11 @@ use Symfony\Component\Console\Input\InputArgument;
 class RequestCreatorCommand extends Command
 {
 	use MelonCreatorTrait;
+
+	/**
+	 * @var Collection
+	 */
+	protected $data;
 
 	/**
 	 * The console command name.
@@ -33,28 +39,16 @@ class RequestCreatorCommand extends Command
 	 */
 	public function handle()
 	{
-		$name = $this->argument('name');
+		$component  = $this->argument('component');
+		$name       = $this->argument('name');
 
-		$this->createRequest($name);
+		$this->collectData($component, $name);
+
+		$this->createRequest();
 
 		$this->info('Whohoooo, Request created ...');
 	}
-
-
-	/**
-	 * Create a new Request
-	 *
-	 * @param $component
-	 *
-	 * @return $this
-	 */
-	protected function createRequest($name)
-	{
-		$path = app_path("Http/Requests/{$name}.php");
-
-		return $this->create('Request', $path, compact('name'));
-	}
-
+	
 	/**
 	 * Get the console command arguments.
 	 *
@@ -63,7 +57,8 @@ class RequestCreatorCommand extends Command
 	protected function getArguments()
 	{
 		return [
-			['name', InputArgument::REQUIRED, 'Name of the request (e.g. RegisteringCustomer)'],
+			['component', InputArgument::REQUIRED, 'In which component do you want to create a resource (Base, Shop, Blog, Forum, Specials)'],
+			['name', InputArgument::REQUIRED, 'Name of the resource (e.g. User, Post, Language or Order)'],
 		];
 	}
 } 

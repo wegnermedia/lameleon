@@ -1,6 +1,7 @@
-<?php namespace {root}\Jobs;
+<?php namespace {namespace};
 
 use Illuminate\Contracts\Bus\SelfHandling;
+use Melon\Jobs\Job;
 
 class {name} extends Job implements SelfHandling
 {

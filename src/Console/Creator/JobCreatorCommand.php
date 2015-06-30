@@ -1,9 +1,8 @@
 <?php namespace Melon\Console\Creator;
 
-use File;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class ResourceCreatorCommand
@@ -13,6 +12,11 @@ use Symfony\Component\Console\Input\InputOption;
 class JobCreatorCommand extends Command
 {
 	use MelonCreatorTrait;
+
+	/**
+	 * @var Collection
+	 */
+	protected $data;
 
 	/**
 	 * The console command name.
@@ -35,28 +39,16 @@ class JobCreatorCommand extends Command
 	 */
 	public function handle()
 	{
-		$name = $this->argument('name');
+		$component  = $this->argument('component');
+		$name       = $this->argument('name');
 
-		$this->createJob($name);
+		$this->collectData($component, $name);
+
+		$this->createJob();
 
 		$this->info('Whohoooo, Job created ...');
 	}
-
-
-	/**
-	 * Create a new service contract
-	 *
-	 * @param $component
-	 *
-	 * @return $this
-	 */
-	protected function createJob($name)
-	{
-		$path = app_path("Jobs/{$name}.php");
-
-		return $this->create('Job', $path, compact('name'));
-	}
-
+	
 	/**
 	 * Get the console command arguments.
 	 *
@@ -65,7 +57,8 @@ class JobCreatorCommand extends Command
 	protected function getArguments()
 	{
 		return [
-			['name', InputArgument::REQUIRED, 'Name of the job (e.g. FlushAllCaches)'],
+			['component', InputArgument::REQUIRED, 'In which component do you want to create a resource (Base, Shop, Blog, Forum, Specials)'],
+			['name', InputArgument::REQUIRED, 'Name of the resource (e.g. User, Post, Language or Order)'],
 		];
 	}
 } 

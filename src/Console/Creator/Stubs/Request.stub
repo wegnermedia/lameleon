@@ -1,4 +1,6 @@
-<?php namespace {root}\Http\Requests;
+<?php namespace {namespace};
+
+use {root}\Http\Requests\Request;
 
 class {name} extends Request
 {

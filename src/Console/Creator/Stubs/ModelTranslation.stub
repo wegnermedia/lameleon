@@ -2,12 +2,11 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Melon\Database\Eloquent\EloquentMelonModel;
-use {contract_namespaced} as {contract}Contract;
 
 /**
  * Class {name}
  */
-class {name} extends Model implements {contract}Contract
+class {name} extends Model
 {
 	use EloquentMelonModel;
 

@@ -1,0 +1,8 @@
+<?php namespace {namespace};
+
+use Melon\Database\MelonModelContract;
+
+interface {name} extends MelonModelContract
+{
+
+}

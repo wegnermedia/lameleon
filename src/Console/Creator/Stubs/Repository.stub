@@ -1,8 +1,9 @@
 <?php namespace {namespace};
 
 use Melon\Database\Eloquent\EloquentMelonRepository;
+use {contract_namespaced} as {contract}Contract;
 
-class {name}
+class {name} implements {contract}Contract
 {
 	use EloquentMelonRepository;
 

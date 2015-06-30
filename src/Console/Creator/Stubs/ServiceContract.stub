@@ -1,4 +1,4 @@
-<?php namespace {root}\Services\{component};
+<?php namespace {namespace};
 
 interface {name}
 {

@@ -1,9 +1,0 @@
-<?php namespace {root}\Services\{component};
-
-class {name} implements {component}Service
-{
-	public function __construct()
-	{
-
-	}
-}
