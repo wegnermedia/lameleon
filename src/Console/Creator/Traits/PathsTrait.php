@@ -105,8 +105,8 @@ trait PathsTrait
 	 *
 	 * @return string
 	 */
-	protected function servicePath($component, $file = null)
+	protected function servicePath($component, $element, $file = null)
 	{
-		return app_path("{$component}/Services/{$file}");
+		return app_path("{$component}/Services/{$element}/{$file}");
 	}
 } 

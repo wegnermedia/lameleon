@@ -1,5 +1,8 @@
 
-		$this->app->singleton(\{contract}::class, function($app)
+		/**
+         *  {contract}
+         */
+		$this->app->singleton(\{contract_namespaced}::class, function($app)
         {
-            return new \{service}();
+            return new \{service_namespaced}();
         });

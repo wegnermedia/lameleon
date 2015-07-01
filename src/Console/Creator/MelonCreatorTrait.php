@@ -146,7 +146,7 @@ trait MelonCreatorTrait
 	 *
 	 * @return $this
 	 */
-	protected function collectData($component, $name)
+	protected function collectData($component, $name, $element = null)
 	{
 		$this->data = new Collection;
 
@@ -219,11 +219,17 @@ trait MelonCreatorTrait
 
 		// Service
 		$this->data->put('service.name', $name);
+		$this->data->put('service.path', $this->servicePath($component, $element, $name . '.php'));
+		$this->data->put('service.namespace', path_to_namespace($this->data->get('service.path')));
+		$this->data->put('service.namespaced', $this->data->get('service.namespace') . '\\' . $name);
 
 		// Service Contract
-		$this->data->put('service_contract.name', $name . 'Service');
-		$this->data->put('service_contract.path', $this->servicePath($component, "{$name}/{$name}Service.php"));
+		$this->data->put('service_contract.name', $element . 'Service');
+		$this->data->put('service_contract.path', $this->servicePath($component, $element, "{$element}Service.php"));
 		$this->data->put('service_contract.namespace', path_to_namespace($this->data->get('service_contract.path')));
+		$this->data->put('service_contract.namespaced', $this->data->get('service_contract.namespace') . '\\' . $element . 'Service');
+
+
 
 		return $this;
 	}
@@ -419,12 +425,42 @@ trait MelonCreatorTrait
 		$this->createServiceProviderIfNotExists();
 
 		// Okay, now the binding
-		$binding = "\t\t" . '$this->app->bind(\\' . $this->data->get('repository_contract.namespaced') . '::class, \\' . $this->data->get('repository.namespaced') . '::class );' . "\n" ;
+		$binding = "\n\t\t" . '$this->app->bind(\\' . $this->data->get('repository_contract.namespaced') . '::class, \\' . $this->data->get('repository.namespaced') . '::class );' . "\n" ;
+
+		$data = [
+			'name'  => $this->data->get('model.name'),
+			'contract_namespaced'  => $this->data->get('repository_contract.namespaced'),
+			'repository_namespaced'  => $this->data->get('repository.namespaced'),
+		];
+
+		$content = $this->getTemplate('ServiceProviderBinding', $data);
 
 		$after_regex = "/register\\(\\)/uim";
 		$before_regex = "/\\}$/uim";
 
-		$this->insertContentIntoFile($this->data->get('provider.path'), $binding, $after_regex, $before_regex, $this->data->get('repository_contract.namespaced'), true);
+		$this->insertContentIntoFile($this->data->get('provider.path'), $content, $after_regex, $before_regex, $this->data->get('repository_contract.namespaced'), true);
+	}
+
+	/**
+	 * Add the repository binding to the service provider
+	 */
+	protected function addSingletonToServiceProvider()
+	{
+		$this->createServiceProviderIfNotExists();
+
+		// Okay, now the singleton
+		$data = [
+			'contract'  => $this->data->get('service_contract.name'),
+			'service_namespaced'  => $this->data->get('service.namespaced'),
+			'contract_namespaced' => $this->data->get('service_contract.namespaced'),
+		];
+
+		$content = $this->getTemplate('ServiceProviderSingleton', $data);
+
+		$after_regex = "/register\\(\\)/uim";
+		$before_regex = "/\\}$/uim";
+
+		$this->insertContentIntoFile($this->data->get('provider.path'), $content, $after_regex, $before_regex, $this->data->get('service_contract.namespaced'), true);
 	}
 
 	/**
@@ -488,6 +524,34 @@ trait MelonCreatorTrait
 		];
 
 		$this->create('Request', $this->data->get('request.path'), $data);
+	}
+
+	/**
+	 * Create a new Service class.
+	 */
+	protected function createService()
+	{
+		$data = [
+			'name' => $this->data->get('service.name'),
+			'namespace' => $this->data->get('service.namespace'),
+			'contract' => $this->data->get('service_contract.name'),
+			'contract_namespaced' => $this->data->get('service_contract.namespaced'),
+		];
+
+		$this->create('Service', $this->data->get('service.path'), $data);
+	}
+
+	/**
+	 * Create a new Service class.
+	 */
+	protected function createServiceContract()
+	{
+		$data = [
+			'name' => $this->data->get('service_contract.name'),
+			'namespace' => $this->data->get('service_contract.namespace'),
+		];
+
+		$this->create('ServiceContract', $this->data->get('service_contract.path'), $data);
 	}
 
 } 

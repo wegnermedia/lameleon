@@ -1,0 +1,11 @@
+<?php namespace {namespace};
+
+use {contract_namespaced};
+
+class {name} implements {contract}
+{
+	public function __construct()
+	{
+
+	}
+}

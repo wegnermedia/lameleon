@@ -35,49 +35,20 @@ class ServiceCreatorCommand extends Command
 	 */
 	public function handle()
 	{
+
+		// art create:service Shop Billing PayPal
 		$component = $this->argument('component');
+		$element = $this->argument('element');
 		$name = $this->argument('name');
 
-		$this->createServiceContract($component);
-		$this->createService($component, $name);
-		$this->addToAppServiceProvider($component, $name);
+		$this->collectData($component, $name, $element);
+
+		$this->createService();
+		$this->createServiceContract();
+
+		$this->addSingletonToServiceProvider();
 
 		$this->info('Whohoooo, Service created ...');
-	}
-
-
-	/**
-	 * Create a new service contract
-	 *
-	 * @param $component
-	 *
-	 * @return $this
-	 */
-	protected function createServiceContract($component)
-	{
-		$name = $component . 'Service';
-
-		$path = app_path("Services/{$component}/{$name}.php");
-
-		return $this->create('ServiceContract', $path, compact('component', 'name'));
-	}
-
-
-	/**
-	 * Create a new Service Class for a component
-	 *
-	 * @param $component
-	 * @param $name
-	 *
-	 * @return $this
-	 */
-	protected function createService($component, $name)
-	{
-		$name = $name . $component . 'Service';
-
-		$path = app_path("Services/{$component}/{$name}.php");
-
-		return $this->create('Service', $path, compact('component', 'name'));
 	}
 
 
@@ -125,7 +96,8 @@ class ServiceCreatorCommand extends Command
 	protected function getArguments()
 	{
 		return [
-			['component', InputArgument::REQUIRED, 'Name of the component (e.g. Billing)'],
+			['component', InputArgument::REQUIRED, 'Name of the component (e.g. Shop)'],
+			['element', InputArgument::REQUIRED, 'Name of the component (e.g. Billing)'],
 			['name', InputArgument::REQUIRED, 'Name of the service itself (e.g. PayPal)'],
 		];
 	}

@@ -1,0 +1,5 @@
+
+		/**
+		 * {name} Repository Binding
+		 */
+		 $this->app->bind(\{contract_namespaced}::class, \{repository_namespaced}::class );
