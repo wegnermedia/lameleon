@@ -1,55 +1,57 @@
 <?php namespace Melon\Console\Creator;
 
+use File;
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class ResourceCreatorCommand
  *
  * @package Melon\Console\Creators
  */
-class RequestCreatorCommand extends Command
+class ControllerCreatorCommand extends Command
 {
 	use MelonCreatorTrait;
 
 	/**
-	 * @var Collection
-	 */
-	protected $data;
-
-	/**
 	 * The console command name.
 	 *
-	 * php artisan create:resource
+	 * php artisan create:controller
 	 *
 	 * @var string
 	 */
-	protected $name = 'create:request';
+	protected $name = 'create:controller';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'The Melon Way to create a new request ...';
+	protected $description = 'The Melon Way to create a new Controller ...';
 
 	/**
 	 *
 	 */
 	public function handle()
 	{
-		$element    = $this->argument('element');
-		$component  = $this->argument('component');
-		$name       = $this->argument('name');
+
+		// art create:controller Backend Base LanguageController
+		$component = $this->argument('component');
+		$element = $this->argument('element');
+		$name = $this->argument('name');
 
 		$this->collectData($component, $name, $element);
 
-		$this->createRequest();
+		$this->createService();
+		$this->createServiceContract();
 
-		$this->info('Whohoooo, Request created ...');
+		$this->addSingletonToServiceProvider();
+
+		$this->info('Whohoooo, Service created ...');
 	}
-	
+
+
 	/**
 	 * Get the console command arguments.
 	 *

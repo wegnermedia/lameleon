@@ -214,7 +214,7 @@ trait MelonCreatorTrait
 
 		// Request
 		$this->data->put('request.name', $name . 'Request');
-		$this->data->put('request.path', $this->requestPath($component, $name . 'Request.php'));
+		$this->data->put('request.path', $this->requestPath($component, $element, $name . 'Request.php'));
 		$this->data->put('request.namespace', path_to_namespace($this->data->get('request.path')));
 
 		// Service

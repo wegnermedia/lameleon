@@ -53,42 +53,6 @@ class ServiceCreatorCommand extends Command
 
 
 	/**
-	 * Add the new Service to the ServiceProvider
-	 *
-	 * @param $component
-	 * @param $name
-	 *
-	 * @return $this
-	 */
-	protected function addToAppServiceProvider($component, $name)
-	{
-		$path = app_path('Providers/AppServiceProvider.php');
-
-		if ( ! file_exists($path) )
-		{
-			$name = 'AppServiceProvider';
-
-			// First, create the Provider
-			$this->create('ServiceProvider', $path, compact('name'));
-
-			// Now Add provider to the app config file ...
-			$content = "\t\t" . config('melon.app_name', 'App') . '\Providers\AppServiceProvider::class,' . "\n";
-
-			$this->insertContentIntoFile(config_path('app.php'), $content, "'providers'", "],", 'AppServiceProvider');
-		}
-
-		$contract = config('melon.app_name', 'App') . '\Services\\' . $component . '\\' . $component . 'Service';
-		$service  = config('melon.app_name', 'App') . '\Services\\' . $component . '\\' . $name . $component . 'Service';
-
-		$singleton = $this->getTemplate('ServiceProviderSingleton', compact('contract', 'service'));
-
-		$after_regex = "/register\\(\\)/uim";
-		$before_regex = "/\\}$/uim";
-
-		return $this->insertContentIntoFile($path , $singleton, $after_regex, $before_regex, $contract, true);
-	}
-
-	/**
 	 * Get the console command arguments.
 	 *
 	 * @return array

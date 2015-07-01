@@ -64,9 +64,9 @@ trait PathsTrait
 	 *
 	 * @return string
 	 */
-	protected function requestPath($component, $file = null)
+	protected function requestPath($component, $element, $file = null)
 	{
-		return app_path("Http/Requests/{$component}/{$file}");
+		return app_path("Http/Requests/{$element}/{$component}/{$file}");
 	}
 
 
