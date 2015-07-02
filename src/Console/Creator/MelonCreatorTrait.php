@@ -13,7 +13,6 @@ use Melon\Console\Creator\Traits\PathsTrait;
 trait MelonCreatorTrait
 {
 	use PathsTrait;
-	use CreatorsTrait;
 
 	/**
 	 * @param       $template
@@ -150,86 +149,38 @@ trait MelonCreatorTrait
 	{
 		$this->data = new Collection;
 
-		// Model
-		$this->data->put('model.name', $name);
-		$this->data->put('model.table', $component . '__' . $name);
-		$this->data->put('model.path', $this->repositoryPath($component, "Eloquent/{$name}.php"));
-		$this->data->put('model.namespace', path_to_namespace($this->data->get('model.path')));
-		$this->data->put('model.namespaced', $this->data->get('model.namespace') . '\\' . $name);
-
-		// Model Contract
-		$this->data->put('model_contract.name', $name);
-		$this->data->put('model_contract.path', $this->repositoryPath($component, "{$name}.php"));
-		$this->data->put('model_contract.namespace', path_to_namespace($this->data->get('model_contract.path')));
-		$this->data->put('model_contract.namespaced', $this->data->get('model_contract.namespace') . '\\' . $name);
-
-		// Model Translation
-		$this->data->put('model_translation.name', $name . 'Translation');
-		$this->data->put('model_translation.table', $this->data->get('model.table') . '_Translations');
-		$this->data->put('model_translation.path', $this->repositoryPath($component, "Eloquent/{$name}Translation.php"));
-		$this->data->put('model_translation.namespace', $this->data->get('model.namespace'));
-		$this->data->put('model_translation.namespaced', $this->data->get('model.namespace') . '\\' . $name . 'Translation');
+		// Model + Model Contract + Translation Model
+		$this->collectModelData($component, $name);
 
 		// Presenter
-		$this->data->put('presenter.name', $name . 'Presenter');
-		$this->data->put('presenter.path', $this->presenterPath($component, $name . 'Presenter.php'));
-		$this->data->put('presenter.namespace', path_to_namespace($this->data->get('presenter.path')));
+		$this->collectPresenterData($component, $name);
 
 		// Repository
-		$this->data->put('repository.name', $name . 'Repository');
-		$this->data->put('repository.path', $this->repositoryPath($component, "Eloquent/{$name}Repository.php"));
-		$this->data->put('repository.namespace', path_to_namespace($this->data->get('repository.path')));
-		$this->data->put('repository.namespaced', $this->data->get('repository.namespace') . '\\' . $name . 'Repository');
-
-		// Repository Contract
-		$this->data->put('repository_contract.name', $name . 'Repository');
-		$this->data->put('repository_contract.path', $this->repositoryPath($component, "{$name}Repository.php"));
-		$this->data->put('repository_contract.namespace', path_to_namespace($this->data->get('repository_contract.path')));
-		$this->data->put('repository_contract.namespaced', $this->data->get('repository_contract.namespace') . '\\' . $name . 'Repository');
+		$this->collectRepositoryData($component, $name);
 
 		// Service Provider
-		$this->data->put('provider.name', $component . 'ServiceProvider');
-		$this->data->put('provider.path', $this->providerPath("{$component}ServiceProvider.php"));
-		$this->data->put('provider.namespace', path_to_namespace($this->data->get('provider.path')));
-		$this->data->put('provider.namespaced', $this->data->get('provider.namespace') . '\\' . $component . 'ServiceProvider');
+		$this->collectServiceProviderData($component);
 
 		// Migration
-		$this->data->put('migration.name', "Create{$component}{$name}Tables" );
-		$this->data->put('migration.filename', "create_{$component}_{$name}_tables" );
-		$this->data->put('migration.path', base_path('database/migrations/' . date('Y_m_d_His') . '_' . $this->data->get('migration.filename'). '.php'));
+		$this->collectMigrationData($component, $name);
 
 		// Seeder
-		$this->data->put('seeder.name', "{$component}{$name}TableSeeder");
-		$this->data->put('seeder.path', $this->seederPath($this->data->get('seeder.name') . ".php"));
+		$this->collectSeederData($component, $name);
 
 		// Event
-		$this->data->put('event.name', $name);
-		$this->data->put('event.path', $this->eventPath($component, $name . '.php'));
-		$this->data->put('event.namespace', path_to_namespace($this->data->get('event.path')));
+		$this->collectEventData($component, $name);
 
 		// Job
-		$this->data->put('job.name', $name);
-		$this->data->put('job.path', $this->jobPath($component, $name . '.php'));
-		$this->data->put('job.namespace', path_to_namespace($this->data->get('job.path')));
+		$this->collectJobData($component, $name);
 
 		// Request
-		$this->data->put('request.name', $name . 'Request');
-		$this->data->put('request.path', $this->requestPath($component, $element, $name . 'Request.php'));
-		$this->data->put('request.namespace', path_to_namespace($this->data->get('request.path')));
+		$this->collectRequestData($element, $component, $name );
 
 		// Service
-		$this->data->put('service.name', $name);
-		$this->data->put('service.path', $this->servicePath($component, $element, $name . '.php'));
-		$this->data->put('service.namespace', path_to_namespace($this->data->get('service.path')));
-		$this->data->put('service.namespaced', $this->data->get('service.namespace') . '\\' . $name);
+		$this->collectServiceData( $element , $component, $name);
 
-		// Service Contract
-		$this->data->put('service_contract.name', $element . 'Service');
-		$this->data->put('service_contract.path', $this->servicePath($component, $element, "{$element}Service.php"));
-		$this->data->put('service_contract.namespace', path_to_namespace($this->data->get('service_contract.path')));
-		$this->data->put('service_contract.namespaced', $this->data->get('service_contract.namespace') . '\\' . $element . 'Service');
-
-
+		// Controller
+		$this->collectControllerData($element, $component, $name);
 
 		return $this;
 	}
@@ -554,4 +505,211 @@ trait MelonCreatorTrait
 		$this->create('ServiceContract', $this->data->get('service_contract.path'), $data);
 	}
 
-} 
+	/**
+	 * Create a new Controller class.
+	 */
+	protected function createController()
+	{
+		$this->createParentControllerIfNotExists();
+
+		$this->create('Controller', $this->data->get('controller.path'), [
+			'name'      => $this->data->get('controller.name'),
+			'namespace' => $this->data->get('controller.namespace'),
+			'parent'    => $this->data->get('base_controller.name'),
+			'parent_namespaced'    => $this->data->get('base_controller.namespaced'),
+		]);
+	}
+
+	protected function createParentControllerIfNotExists()
+	{
+		// Root Controller
+		$this->create('ParentController', $this->data->get('root_controller.path'), [
+			'name'      => $this->data->get('root_controller.name'),
+			'namespace' => $this->data->get('root_controller.namespace'),
+		    'parent'    => 'Controller',
+		    'parent_namespaced' => config('melon.app_name', 'App') . '\Http\Controllers\Controller',
+		]);
+
+		// Base Controller
+		$this->create('ParentController', $this->data->get('base_controller.path'), [
+			'name'      => $this->data->get('base_controller.name'),
+			'namespace' => $this->data->get('base_controller.namespace'),
+			'parent'    => $this->data->get('root_controller.name'),
+			'parent_namespaced' => $this->data->get('root_controller.namespaced'),
+		]);
+	}
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectModelData($component, $name)
+	{
+		$this->data->put('model.name', $name);
+		$this->data->put('model.table', $component . '__' . $name);
+		$this->data->put('model.path', $this->repositoryPath($component, "Eloquent/{$this->data->get('model.name')}.php"));
+		$this->data->put('model.namespace', path_to_namespace($this->data->get('model.path')));
+		$this->data->put('model.namespaced', $this->data->get('model.namespace') . '\\' . $this->data->get('model.name'));
+
+		$this->data->put('model_contract.name', $name);
+		$this->data->put('model_contract.path', $this->repositoryPath($component, "{$this->data->get('model_contract.name')}.php"));
+		$this->data->put('model_contract.namespace', path_to_namespace($this->data->get('model_contract.path')));
+		$this->data->put('model_contract.namespaced', $this->data->get('model_contract.namespace') . '\\' . $this->data->get('model_contract.name') );
+
+		$this->data->put('model_translation.name', $name . 'Translation');
+		$this->data->put('model_translation.table', $this->data->get('model.table') . '_Translations');
+		$this->data->put('model_translation.path', $this->repositoryPath($component, "Eloquent/{$this->data->get('model_translation.name')}.php"));
+		$this->data->put('model_translation.namespace', $this->data->get('model.namespace'));
+		$this->data->put('model_translation.namespaced', $this->data->get('model.namespace') . '\\' . $this->data->get('model_translation.name'));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectPresenterData($component, $name)
+	{
+		$this->data->put('presenter.name', preg_replace("/(Presenter)+$/uism", "Presenter", $name) . 'Presenter');
+		$this->data->put('presenter.path', $this->presenterPath($component, $this->data->get('presenter.name') . '.php'));
+		$this->data->put('presenter.namespace', path_to_namespace($this->data->get('presenter.path')));
+		$this->data->put('presenter.namespaced', $this->data->get('presenter.namespace') . '\\' . $this->data->get('presenter.name'));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectRepositoryData($component, $name)
+	{
+		$this->data->put('repository.name', preg_replace("/(Repository)+$/uism", "Repository", $name) . 'Repository');
+		$this->data->put('repository.path', $this->repositoryPath($component, "Eloquent/{$this->data->get('repository.name')}.php"));
+		$this->data->put('repository.namespace', path_to_namespace($this->data->get('repository.path')));
+		$this->data->put('repository.namespaced', $this->data->get('repository.namespace') . '\\' . $this->data->get('repository.name'));
+
+		$this->data->put('repository_contract.name', preg_replace("/(Repository)+$/uism", "Repository", $name) . 'Repository');
+		$this->data->put('repository_contract.path', $this->repositoryPath($component, $this->data->get('repository_contract.name') . ".php"));
+		$this->data->put('repository_contract.namespace', path_to_namespace($this->data->get('repository_contract.path')));
+		$this->data->put('repository_contract.namespaced', $this->data->get('repository_contract.namespace') . '\\' . $this->data->get('repository_contract.name'));
+	}
+
+
+	/**
+	 * @param $component
+	 */
+	protected function collectServiceProviderData($component)
+	{
+		$this->data->put('provider.name', preg_replace("/(ServiceProvider)+$/uism", "ServiceProvider", $component) . 'ServiceProvider');
+		$this->data->put('provider.path', $this->providerPath($this->data->get('provider.name') . ".php"));
+		$this->data->put('provider.namespace', path_to_namespace($this->data->get('provider.path')));
+		$this->data->put('provider.namespaced', $this->data->get('provider.namespace') . '\\' . $this->data->get('provider.name'));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectMigrationData($component, $name)
+	{
+		$this->data->put('migration.name', "Create{$component}{$name}Tables");
+		$this->data->put('migration.filename', "create_{$component}_{$name}_tables");
+		$this->data->put('migration.path', base_path('database/migrations/' . date('Y_m_d_His') . '_' . $this->data->get('migration.filename') . '.php'));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectSeederData($component, $name)
+	{
+		$this->data->put('seeder.name', "{$component}{$name}TableSeeder");
+		$this->data->put('seeder.path', $this->seederPath($this->data->get('seeder.name') . ".php"));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectEventData($component, $name)
+	{
+		$this->data->put('event.name', preg_replace("/(Event)+$/uism", "Event", $name) . 'Event');
+		$this->data->put('event.path', $this->eventPath($component, $this->data->get('event.name') . '.php'));
+		$this->data->put('event.namespace', path_to_namespace($this->data->get('event.path')));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 */
+	protected function collectJobData($component, $name)
+	{
+		$this->data->put('job.name', $name);
+		$this->data->put('job.path', $this->jobPath($component, $name . '.php'));
+		$this->data->put('job.namespace', path_to_namespace($this->data->get('job.path')));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 * @param $element
+	 */
+	protected function collectRequestData($element, $component, $name)
+	{
+		$this->data->put('request.name', preg_replace("/(Request)+$/uism", "", $name) . 'Request');
+		$this->data->put('request.path', $this->requestPath($component, $element, $this->data->get('request.name') . '.php'));
+		$this->data->put('request.namespace', path_to_namespace($this->data->get('request.path')));
+	}
+
+
+	/**
+	 * @param $component
+	 * @param $name
+	 * @param $element
+	 */
+	protected function collectServiceData($element, $component, $name)
+	{
+		$this->data->put('service.name', $name);
+		$this->data->put('service.path', $this->servicePath($component, $element, $name . '.php'));
+		$this->data->put('service.namespace', path_to_namespace($this->data->get('service.path')));
+		$this->data->put('service.namespaced', $this->data->get('service.namespace') . '\\' . $name);
+
+		// Service Contract
+		$this->data->put('service_contract.name', preg_replace("/(Service)+$/uism", "Service", $element) . 'Service');
+		$this->data->put('service_contract.path', $this->servicePath($component, $element, $this->data->get('service_contract.name') . ".php"));
+		$this->data->put('service_contract.namespace', path_to_namespace($this->data->get('service_contract.path')));
+		$this->data->put('service_contract.namespaced', $this->data->get('service_contract.namespace') . '\\' . $this->data->get('service_contract.name'));
+	}
+
+
+	/**
+	 * @param $name
+	 */
+	protected function collectControllerData($element, $component, $name)
+	{
+		$this->data->put('controller.name', preg_replace("/(Controller)+$/uism", "Controller", $name) . 'Controller');
+		$this->data->put('controller.path', $this->controllerPath($element, $component, $this->data->get('controller.name') . ".php"));
+		$this->data->put('controller.namespace', path_to_namespace($this->data->get('controller.path')));
+		$this->data->put('controller.namespaced', $this->data->get('controller.namespace') . '\\' . $this->data->get('controller.name'));
+
+		// Base Controller for this controller
+		// App\Http\Controllers\Frontend\Shop\FrontendShopController
+		$this->data->put('base_controller.name', "{$element}{$component}Controller");
+		$this->data->put('base_controller.path', $this->controllerRootPath($element . '/' . $component . '/' . $this->data->get('base_controller.name') . ".php"));
+		$this->data->put('base_controller.namespace', path_to_namespace($this->data->get('base_controller.path')));
+		$this->data->put('base_controller.namespaced', $this->data->get('base_controller.namespace') . '\\' . $this->data->get('base_controller.name'));
+
+		// The Element root controller
+		// App\Http\Controllers\Frontend\FrontendController
+		$this->data->put('root_controller.name', "{$element}Controller");
+		$this->data->put('root_controller.path', $this->controllerRootPath($element . '/' . $this->data->get('root_controller.name') . ".php"));
+		$this->data->put('root_controller.namespace', path_to_namespace($this->data->get('root_controller.path')));
+		$this->data->put('root_controller.namespaced', $this->data->get('root_controller.namespace') . '\\' . $this->data->get('root_controller.name'));
+	}
+
+}

@@ -93,7 +93,7 @@ trait PathsTrait
 	 */
 	protected function presenterPath($component, $file = null)
 	{
-		return app_path("{$component}/Presenters/{$file}");
+		return app_path("{$component}/Presenters/Eloquent/{$file}");
 	}
 
 
@@ -108,5 +108,31 @@ trait PathsTrait
 	protected function servicePath($component, $element, $file = null)
 	{
 		return app_path("{$component}/Services/{$element}/{$file}");
+	}
+
+	/**
+	 * Get the Controller path, based on component.
+	 *
+	 * @param      $component
+	 * @param null $file
+	 *
+	 * @return string
+	 */
+	protected function controllerPath( $element, $component, $file = null )
+	{
+		return app_path("Http/Controllers/{$element}/{$component}/{$file}");
+	}
+
+	/**
+	 * Get the Controller path, based on component.
+	 *
+	 * @param      $component
+	 * @param null $file
+	 *
+	 * @return string
+	 */
+	protected function controllerRootPath( $file = null )
+	{
+		return app_path("Http/Controllers/{$file}");
 	}
 } 

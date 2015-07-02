@@ -1,0 +1,69 @@
+<?php namespace {namespace};
+
+use {parent_namespaced};
+
+class {name} extends {parent}
+{
+	// $viewPrefix = '';
+
+	public function __construct()
+	{
+		// parent::__construct();
+	}
+
+	/**
+	 *  Display Resource Index Page
+	 */
+	public function index()
+	{
+		// return $this->view('');
+	}
+
+	/**
+     *  Display Item
+     */
+	public function show($id)
+	{
+		// Display Item
+	}
+
+	/**
+     *  Display Form to create a Resource
+     */
+	public function create()
+	{
+		// Display Form to create a Resource
+	}
+
+	/**
+     *  Store a new item to repository
+     */
+	public function store()
+	{
+		//
+	}
+
+	/**
+     *  Display Form to edit an item
+     */
+	public function edit($id)
+	{
+		//
+	}
+
+	/**
+     *  Handle the Editation
+     */
+	public function update($id)
+	{
+		// Handle the Editation
+	}
+
+	/**
+     *  Delete Item
+     */
+	public function destroy($id)
+	{
+		// Delete Item
+	}
+}

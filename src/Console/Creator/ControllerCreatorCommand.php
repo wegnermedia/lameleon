@@ -43,12 +43,9 @@ class ControllerCreatorCommand extends Command
 
 		$this->collectData($component, $name, $element);
 
-		$this->createService();
-		$this->createServiceContract();
+		$this->createController();
 
-		$this->addSingletonToServiceProvider();
-
-		$this->info('Whohoooo, Service created ...');
+		$this->info('Whohoooo, Controller created ...');
 	}
 
 

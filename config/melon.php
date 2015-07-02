@@ -100,6 +100,7 @@ return [
 		'command.melon.create.job'      => Melon\Console\Creator\JobCreatorCommand::class,
 		'command.melon.create.event'    => Melon\Console\Creator\EventCreatorCommand::class,
 		'command.melon.create.request'  => Melon\Console\Creator\RequestCreatorCommand::class,
+		'command.melon.create.controller'  => Melon\Console\Creator\ControllerCreatorCommand::class,
 	],
 
 	/*
